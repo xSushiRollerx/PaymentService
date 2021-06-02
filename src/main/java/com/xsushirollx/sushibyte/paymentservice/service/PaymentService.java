@@ -35,7 +35,7 @@ public class PaymentService {
 	//should each order be its own payment intent or it be one?
 	//for now they are one 
 	//add customer field
-	public String getClientSecret(List<FoodOrderDTO> orders) throws StripeException {
+	public String getClientSecret(List<FoodOrderDTO> orders) throws StripeException, NumberFormatException {
 		Stripe.apiKey = API_KEY;
 
 		PaymentIntentCreateParams params =

@@ -47,8 +47,8 @@ public class PaymentControllerTests {
 	
 	@SuppressWarnings("unchecked")
 	@Test
-	public void postClientSecret200() throws JsonProcessingException, Exception {
-		String token  = "Bearer " + util.generateToken("1");
+	public void postClientSecret201() throws JsonProcessingException, Exception {
+		String token  = "Bearer " + util.generateToken("96");
 		
 		when(pservice.getClientSecret((java.util.List<FoodOrderDTO>) Mockito.any(List.class))).thenReturn("client_secret");
 		
@@ -57,5 +57,18 @@ public class PaymentControllerTests {
 				.andExpect(status().isCreated());
 		
 	}
+//	
+//	@SuppressWarnings("unchecked")
+//	@Test
+//	public void postClientSecret500() throws JsonProcessingException, Exception {
+//		String token  = "Bearer " + util.generateToken("1");
+//		
+//		when(pservice.getClientSecret((java.util.List<FoodOrderDTO>) Mockito.any(List.class))).thenThrow(NumberFormatException.class);
+//		
+//		mockMvc.perform(post("/payment").header("Authorization", token).contentType(MediaType.APPLICATION_JSON)
+//				.content(objectMapper.writeValueAsString(new ArrayList<FoodOrderDTO>())))
+//				.andExpect(status().isInternalServerError());
+//		
+//	}
 	
 }

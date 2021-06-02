@@ -21,7 +21,7 @@ public class PaymentController {
 	@Autowired
 	PaymentService pservice;
 	
-//	@PreAuthorize("hasAnyAuthority('CUSTOMER', 'ADMINISTRATOR')")
+	@PreAuthorize("hasAnyAuthority('CUSTOMER', 'ADMINISTRATOR')")
 	@PostMapping("/payment")
     ResponseEntity<?> addNewFoodMenuItem(@RequestBody List<FoodOrderDTO> orders) {
     	try {
