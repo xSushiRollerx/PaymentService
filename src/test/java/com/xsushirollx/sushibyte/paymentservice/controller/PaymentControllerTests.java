@@ -12,7 +12,9 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.xsushirollx.sushibyte.paymentservice.dao.UserDAO;
 import com.xsushirollx.sushibyte.paymentservice.dto.FoodOrderDTO;
+import com.xsushirollx.sushibyte.paymentservice.model.User;
 import com.xsushirollx.sushibyte.paymentservice.security.JWTUtil;
 import com.xsushirollx.sushibyte.paymentservice.service.PaymentService;
 
@@ -23,6 +25,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 @AutoConfigureMockMvc
 @SpringBootTest
@@ -33,6 +36,9 @@ public class PaymentControllerTests {
 
 	@MockBean
 	PaymentService pservice;
+	
+	@MockBean
+	UserDAO udao;
 	
 	@Autowired
 	ObjectMapper objectMapper;
@@ -51,6 +57,7 @@ public class PaymentControllerTests {
 		String token  = "Bearer " + util.generateToken("96");
 		
 		when(pservice.getClientSecret((java.util.List<FoodOrderDTO>) Mockito.any(List.class))).thenReturn("client_secret");
+		when(udao.findById(Mockito.anyInt())).thenReturn(Optional.of(new User(96, 1)));
 		
 		mockMvc.perform(post("/payment").header("Authorization", token).contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(new ArrayList<FoodOrderDTO>())))
