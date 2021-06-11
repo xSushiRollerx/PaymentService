@@ -1,6 +1,7 @@
 package com.xsushirollx.sushibyte.paymentservice.controller;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,7 +18,7 @@ import com.xsushirollx.sushibyte.paymentservice.service.PaymentService;
 @Controller
 public class PaymentController {
 	
-	
+	Logger log = Logger.getLogger("PaymentController");
 	@Autowired
 	PaymentService pservice;
 	
@@ -27,6 +28,7 @@ public class PaymentController {
     	try {
 			return new ResponseEntity<>(pservice.getClientSecret(orders), HttpStatus.CREATED);
 		} catch (Exception e) {
+			log.info("Exception caughts");
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
     }
