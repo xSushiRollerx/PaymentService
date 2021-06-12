@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.stripe.exception.StripeException;
 import com.xsushirollx.sushibyte.paymentservice.dto.FoodOrderDTO;
 import com.xsushirollx.sushibyte.paymentservice.service.PaymentService;
 
@@ -24,13 +25,8 @@ public class PaymentController {
 	
 	@PreAuthorize("hasAnyAuthority('CUSTOMER', 'ADMINISTRATOR')")
 	@PostMapping("/payment")
-    ResponseEntity<?> addNewFoodMenuItem(@RequestBody List<FoodOrderDTO> orders) {
-    	try {
-			return new ResponseEntity<>(pservice.getClientSecret(orders), HttpStatus.CREATED);
-		} catch (Exception e) {
-			log.info("Exception caughts");
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+    ResponseEntity<?> addNewFoodMenuItem(@RequestBody List<FoodOrderDTO> orders) throws StripeException {
+    	return new ResponseEntity<>(pservice.getClientSecret(orders), HttpStatus.CREATED);
     }
 
 }
